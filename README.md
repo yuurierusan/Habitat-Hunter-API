@@ -35,7 +35,7 @@
 
 ##### The front-end repo [here](https://github.com/yuurierusan/Habitat-Hunter).
 
-##### The api rep [here](https://github.com/yuurierusan/Habitat-Hunter-API).
+##### The api repo [here](https://github.com/yuurierusan/Habitat-Hunter-API).
 
 ---
 
