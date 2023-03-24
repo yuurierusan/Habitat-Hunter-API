@@ -21,7 +21,7 @@
 
 ### **_Technologies Used_**
 
-```MongoDB``` ```Express``` ```React``` ```Node```
+```MongoDB``` ```Flask``` ```React``` ```Python```
 
 ---
 
