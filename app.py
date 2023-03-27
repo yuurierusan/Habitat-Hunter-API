@@ -1,16 +1,14 @@
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from flask import Flask, request, session, jsonify
 from resources.user import Users, SignUp, SignIn, Logout
+from flask import Flask, request, session, jsonify
 from flask_mongoengine import MongoEngine
 from resources.listing import Listing
 from resources.comment import Comment
 from flask_session import Session
-
 from dotenv import load_dotenv
 from flask_restful import Api
 from flask_cors import CORS
 from models.db import db
-
 import os
 
 load_dotenv()
