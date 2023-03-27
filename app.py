@@ -5,7 +5,7 @@ from flask_mongoengine import MongoEngine
 from resources.listing import Listing
 from resources.comment import Comment
 from flask_session import Session
-from flask_bcrypt import Bcrypt
+
 from dotenv import load_dotenv
 from flask_restful import Api
 from flask_cors import CORS
