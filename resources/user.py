@@ -1,5 +1,6 @@
 from flask import request, session, jsonify, make_response
 from flask_restful import Resource
+from flask_bcrypt import Bcrypt
 from models.user import User
 
 
@@ -8,14 +9,19 @@ class Users(Resource):
         users = User.objects()
         return make_response(jsonify(users), 200)
 
+
+class SignUp(Resource):
     def post(self):
+        user = User()
         body = request.get_json()
         email = User.objects(email=body.get("email")).first()
-        count = User.objects.count()
-        if email or count == 1:
-            return {"msg": "Email Already Exists"}
-        User(**body).save()
-        return {"msg": "Account Created"}, 200
+        if email:
+            return {"message": "Email already exists"}, 500
+        hashed = bcrypt.generate_password_hash(body.get("password"), 10)
+        user.email = body.get("email")
+        user.password = hashed
+        user.save()
+        return {"message": "User created"}, 200
 
 
 class SignIn(Resource):
