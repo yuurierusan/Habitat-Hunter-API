@@ -2,8 +2,15 @@ from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from flask_bcrypt import Bcrypt
 from models.user import User
+from dotenv import load_dotenv
+
+import os
+
+load_dotenv()
 
 bcrypt = Bcrypt()
+
+SALT_ROUNDS = int(os.getenv('SALT_ROUNDS'))
 
 
 def index():
@@ -32,14 +39,15 @@ class SignUp(Resource):
     def post(self):
         user = User()
         body = request.get_json()
-        email = User.objects(email=body.get("email")).first()
-        count = User.objects.count()
-        if email or count == 1:
-            return {"message": "Email already exists"}, 500
-        hashed = bcrypt.generate_password_hash(body.get("password"), 10)
+        pw = body.get("password")
+        hashed = bcrypt.generate_password_hash(
+            pw, SALT_ROUNDS)
+        user.name = body.get("name")
         user.email = body.get("email")
         user.password = hashed
+        user.push()
         user.save()
+        print(user.name)
         return {"message": "User created"}, 200
 
 

@@ -9,22 +9,25 @@ from dotenv import load_dotenv
 from flask_restful import Api
 from flask_cors import CORS
 from models.db import db
+import datetime
 import os
 
 load_dotenv()
 
+APP_SECRET_KEY = os.environ.get('APP_SECRET_KEY')
 MONGO_URI = os.environ.get('MONGO_URI')
-
 app = Flask(__name__)
 
-app.config["MONGO_URI"] = MONGO_URI
-app.config["SESSION_PERMANENT"] = False
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
+app.config["MONGODB_SETTINGS"] = {'DB': "TEST", "host": MONGO_URI}
+app.config['JWT_SECRET_KEY'] = APP_SECRET_KEY
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_PERMANENT"] = False
 
 CORS(app)
 Session(app)
 api = Api(app)
-db.init_app(app)
+db.init_app(app, print('started'))
 
 api.add_resource(Users, '/users')
 api.add_resource(SignUp, '/signup')
