@@ -1,3 +1,4 @@
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.listing import Listing
@@ -14,7 +15,7 @@ class Listings(Resource):
         listings = Listing.objects()
         return make_response(jsonify(listings), 200)
 
-    def get_listing_by_id(id: str):
+    def get_by_id(id: str):
         if index():
             listing = Listing.objects(title=current_listing).first()
             id = Listing.objects(id=id)
@@ -22,6 +23,8 @@ class Listings(Resource):
                 return jsonify(id), 200
             return {'msg': 'Unable to find listing'}, 404
 
+
+class NewListing(Resource):
     @jwt_required()
     def post(self):
         listing = Listing()
@@ -34,7 +37,10 @@ class Listings(Resource):
         listing.save()
         return {"message": "Posted listing"}, 200
 
-    def update_listing(id):
+
+class UpdateListing(Resource):
+    @jwt_required()
+    def put(id):
         if index():
             current_listing = get_jwt_identity()
             listing = Listing.objects(title=current_listing).first()
@@ -46,7 +52,7 @@ class Listings(Resource):
             return {"message": "Listing id didn't match"}, 404
         return {"message": "Please log in"}, 404
 
-    def delete_listing(id):
+    def delete(id):
         if index():
             current_listing = get_jwt_identity()
             listing = Listing.objects(title=current_listing).first()

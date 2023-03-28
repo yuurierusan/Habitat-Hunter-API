@@ -1,4 +1,5 @@
-from flask import request, jsonify, make_response
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from models.comment import Comment
 
@@ -22,6 +23,9 @@ class Comments(Resource):
                 return jsonify(id), 200
             return {'msg': 'Unable to find comment'}, 404
 
+
+class NewComment(Resource):
+    @jwt_required()
     def post(self):
         comment = Comment()
         body = request.get_json()

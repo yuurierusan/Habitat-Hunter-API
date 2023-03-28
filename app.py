@@ -1,9 +1,9 @@
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from resources.user import Users, SignUp, SignIn, Logout
-from flask import Flask, request, session, jsonify
+from flask import Flask
 from flask_mongoengine import MongoEngine
-from resources.listing import Listing
-from resources.comment import Comment
+from resources.listing import Listings
+from resources.comment import Comments
 from flask_session import Session
 from dotenv import load_dotenv
 from flask_restful import Api
@@ -33,6 +33,7 @@ api.add_resource(Users, '/users')
 api.add_resource(SignUp, '/signup')
 api.add_resource(SignIn, '/signin')
 api.add_resource(Logout, '/logout')
+api.add_resource(Listings, )
 
 if __name__ == "__main__":
     app.run(debug=True)
