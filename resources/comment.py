@@ -16,7 +16,7 @@ class Comments(Resource):
 
     def get_comment_by_id(id: str):
         if index():
-            comment = Comment.objects(comments=current_comment).first()
+            comment = Comment.objects(name=current_comment).first()
             id = Comment.objects(id=id)
             if comment and id:
                 return jsonify(id), 200

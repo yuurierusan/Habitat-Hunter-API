@@ -16,12 +16,13 @@ class Listings(Resource):
 
     def get_listing_by_id(id: str):
         if index():
-            listing = Listing.objects(listing=current_listing).first()
+            listing = Listing.objects(title=current_listing).first()
             id = Listing.objects(id=id)
             if listing and id:
                 return jsonify(id), 200
             return {'msg': 'Unable to find listing'}, 404
 
+    @jwt_required()
     def post(self):
         listing = Listing()
         body = request.get_json()
@@ -32,3 +33,26 @@ class Listings(Resource):
         listing.push()
         listing.save()
         return {"message": "Posted listing"}, 200
+
+    def update_listing(id):
+        if index():
+            current_listing = get_jwt_identity()
+            listing = Listing.objects(title=current_listing).first()
+            id = Listing.objects(id=id)
+            if listing and id:
+                body = request.get_json()
+                id.update(**body)
+                return jsonify(id), 200
+            return {"message": "Listing id didn't match"}, 404
+        return {"message": "Please log in"}, 404
+
+    def delete_listing(id):
+        if index():
+            current_listing = get_jwt_identity()
+            listing = Listing.objects(title=current_listing).first()
+            id = Listing.objects(id=id)
+            if listing and id:
+                id.delete()
+                return jsonify(id), 200
+            return {"message": "Listing id didn't match"}, 404
+        return {"message": "Please log in"}, 404
