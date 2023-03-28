@@ -1,4 +1,4 @@
-from flask import jsonify, make_response
+from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.listing import Listing
 
@@ -21,3 +21,14 @@ class Listings(Resource):
             if listing and id:
                 return jsonify(id), 200
             return {'msg': 'Unable to find listing'}, 404
+
+    def post(self):
+        listing = Listing()
+        body = request.get_json()
+        listing.image = body.get("image")
+        listing.title = body.get("title")
+        listing.price = body.get("price")
+        listing.amenities = body.get("amenities")
+        listing.push()
+        listing.save()
+        return {"message": "Posted listing"}, 200
