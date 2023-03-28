@@ -2,7 +2,7 @@ from datetime import datetime
 from models.db import db
 
 
-class Comment(db.Document):
+class Comment(db.EmbeddedDocument):
     content = db.StringField()
     name = db.StringField()
     creation_date = db.DateTimeField(default=datetime.now)

@@ -14,8 +14,8 @@ import os
 
 load_dotenv()
 
-APP_SECRET_KEY = os.environ.get('APP_SECRET_KEY')
-MONGO_URI = os.environ.get('MONGO_URI')
+APP_SECRET_KEY = os.getenv('APP_SECRET_KEY')
+MONGO_URI = os.getenv('MONGO_URI')
 app = Flask(__name__)
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)

@@ -2,8 +2,8 @@ from datetime import datetime
 from models.db import db
 
 
-class Listing(db.Document):
-    image_path = db.StringField()
+class Listing(db.EmbeddedDocument):
+    image = db.StringField()
     title = db.StringField()
     price = db.IntField()
     amenities = db.StringField()
