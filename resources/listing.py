@@ -1,4 +1,4 @@
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.listing import Listing
@@ -52,6 +52,9 @@ class UpdateListing(Resource):
             return {"message": "Listing id didn't match"}, 404
         return {"message": "Please log in"}, 404
 
+
+class DeleteListing(Resource):
+    @jwt_required()
     def delete(id):
         if index():
             current_listing = get_jwt_identity()

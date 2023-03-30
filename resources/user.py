@@ -1,4 +1,4 @@
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from flask_bcrypt import Bcrypt
@@ -46,7 +46,6 @@ class SignUp(Resource):
         user.email = body.get("email")
         user.password = hashed
         user.save()
-        print(user.name)
         return {"message": "User created"}, 200
 
 
@@ -58,9 +57,9 @@ class SignIn(Resource):
             if bcrypt.check_password_hash(user["password"], body.get("password")):
                 session['email'] = body.get('email')
                 access_token = create_access_token(identity=body.get("email"))
-                return jsonify(access_token=access_token, user=user, message="Logged In"), 200
+                return {'message': "Logged In"}, 200
             return {"message": "Unable to Login"}, 500
-        return {"message": "No Such User Exist"}, 500
+        return {"message": "No Such User Exist"}, 404
 
 
 class Logout(Resource):
