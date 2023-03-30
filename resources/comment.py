@@ -1,6 +1,7 @@
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, session, jsonify, make_response
 from flask_restful import Resource
+from models.user import User
 from models.comment import Comment
 
 
@@ -27,10 +28,12 @@ class Comments(Resource):
 class NewComment(Resource):
     @jwt_required()
     def post(self):
-        comment = Comment()
-        body = request.get_json()
-        comment.title = body.get("title")
-        comment.content = body.get("content")
-        comment.push()
-        comment.save()
-        return {"message": "Posted comment"}, 200
+        current_user = get_jwt_identity()
+        user = User.objects(email=current_user).first()
+        if user:
+            comment = Comment()
+            body = request.get_json()
+            comment.title = body.get("title")
+            comment.content = body.get("content")
+            comment.save()
+            return {"message": "Posted comment"}, 200

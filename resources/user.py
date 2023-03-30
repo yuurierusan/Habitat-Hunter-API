@@ -46,7 +46,7 @@ class SignUp(Resource):
         user.email = body.get("email")
         user.password = hashed
         user.save()
-        return {"message": "User created"}, 200
+        return {"message": "User Signed Up"}, 200
 
 
 class SignIn(Resource):
@@ -57,7 +57,7 @@ class SignIn(Resource):
             if bcrypt.check_password_hash(user["password"], body.get("password")):
                 session['email'] = body.get('email')
                 access_token = create_access_token(identity=body.get("email"))
-                return {'message': "Logged In"}, 200
+                return make_response(jsonify(access_token=access_token, user=user, message=f"Welcome {user.name}"), 200)
             return {"message": "Unable to Login"}, 500
         return {"message": "No Such User Exist"}, 404
 
