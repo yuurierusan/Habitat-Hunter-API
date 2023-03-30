@@ -45,7 +45,6 @@ class SignUp(Resource):
         user.name = body.get("name")
         user.email = body.get("email")
         user.password = hashed
-        user.push()
         user.save()
         print(user.name)
         return {"message": "User created"}, 200
