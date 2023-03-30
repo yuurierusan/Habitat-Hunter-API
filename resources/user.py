@@ -4,6 +4,7 @@ from flask_restful import Resource
 from flask_bcrypt import Bcrypt
 from models.user import User
 from dotenv import load_dotenv
+from bson import ObjectId
 import os
 
 load_dotenv()
@@ -20,20 +21,20 @@ def index():
 
 
 class Users(Resource):
-    @jwt_required()
     def get(self):
         users = User.objects()
         return make_response(jsonify(users), 200)
 
-    def get_user_by_id(id: str):
-        if index():
-            current_user = get_jwt_identity()
-            user = User.objects(email=current_user).first()
-            id = User.objects(id=id)
-            if user and id:
-                return jsonify(id), 200
-            return {'msg': 'Unable to find account'}, 404
-        return {'msg': 'Not currently logged in'}, 404
+    def get_user_by_id(self, id: str):
+        try:
+            user = User.objects(id=ObjectId(id)).first()
+            if user:
+                return make_response(jsonify({'id': str(user.id), 'name': user.name, 'email': user.email}), 200)
+            else:
+                return {'msg': 'User not found'}, 404
+        except Exception as e:
+            print(f'Error retrieving user: {e}')
+            return {'msg': 'Error retrieving user'}, 500
 
 
 class SignUp(Resource):

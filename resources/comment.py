@@ -20,14 +20,6 @@ class Comments(Resource):
             comments.extend(user.comments)
         return make_response(jsonify(user.name, comments), 200)
 
-    def get_comment_by_id(id: str):
-        user = User.objects(id=id).first()
-        comment = []
-        if id:
-            comment.extend(user.comments)
-            return make_response(jsonify(user.id, comments), 200)
-        return {'msg': 'Unable to find comment'}, 404
-
 
 class NewComment(Resource):
     @jwt_required()

@@ -41,7 +41,6 @@ api.add_resource(UpdateListing, '/listing/:id')
 api.add_resource(DeleteListing, '/listing/:id')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
-api.add_resource(Comments, '/comment/:id')
 
 
 if __name__ == "__main__":
