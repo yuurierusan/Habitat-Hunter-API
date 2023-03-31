@@ -1,7 +1,6 @@
 from flask_jwt_extended import JWTManager
 from resources.user import Users, UserById, SignUp, SignIn, Logout
 from flask import Flask
-from flask_mongoengine import MongoEngine
 from resources.listing import Listings, ListingByTitle, NewListing, UpdateListing, DeleteListing
 from resources.comment import Comments, NewComment
 from flask_session import Session
