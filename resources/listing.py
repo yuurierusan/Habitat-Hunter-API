@@ -3,7 +3,6 @@ from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.listing import Listing
 from models.user import User
-from bson import ObjectId
 
 
 def index():
@@ -18,7 +17,7 @@ class Listings(Resource):
         listings = []
         for user in users:
             listings.extend(user.listings)
-        return make_response(jsonify(listings), 200)
+            return make_response(jsonify(listings), 200)
 
 
 class ListingById(Resource):
@@ -49,26 +48,26 @@ class NewListing(Resource):
             listing.amenities = body.get("amenities")
             user.listings.append(listing)
             user.save()
-            return {"message": "Updated user listings"}, 200
+            return {"message": f"Updated {user.name} listings"}, 200
         return {"message": "Please log in"}, 404
 
 
 class UpdateListing(Resource):
     @jwt_required()
-    def put(self):
+    def put(self, title):
         current_user = get_jwt_identity()
         user = User.objects(email=current_user).first()
         if user:
-            listing = Listing.objects(title=listing).first()
-            if listing:
-                body = request.get_json()
-                listing.image = body.get("image")
-                listing.title = body.get("title")
-                listing.price = body.get("price")
-                listing.amenities = body.get("amenities")
-                user.listing.update(listing)
-                user.save()
-                return {"message": "Listing Updated"}, 200
+            for listing in user.listings:
+                if listing.title == title:
+                    body = request.get_json()
+                    listing.image = request.json.get('image', listing.image)
+                    listing.title = request.json.get('title', listing.title)
+                    listing.price = request.json.get('price', listing.price)
+                    listing.amenities = request.json.get(
+                        'amenities', listing.amenities)
+                    user.save()
+                    return {"message": f"Listing {title} Updated"}, 200
         return {"message": "Please log in"}, 404
 
 
