@@ -22,16 +22,16 @@ class Listings(Resource):
 
 class ListingById(Resource):
     def get(self, id: str):
-        try:
-            user = User.objects(id=ObjectId(id)).first()
+        # try:
+        #     user = User.objects(id=ObjectId(id)).first()
 
-            if user:
-                return make_response(jsonify({'id': str(user.id), 'name': user.name, 'email': user.email}), 200)
-            listing = Listing.objects(title=current_listing).first()
-            id = Listing.objects(id=id)
-            if listing and id:
-                return jsonify(id), 200
-            return {'msg': 'Unable to find listing'}, 404
+        #     if user:
+        #         return make_response(jsonify({'id': str(user.id), 'name': user.name, 'email': user.email}), 200)
+        #     listing = Listing.objects(title=current_listing).first()
+        #     id = Listing.objects(id=id)
+        #     if listing and id:
+        #         return jsonify(id), 200
+        return {'msg': 'Unable to find listing'}, 404
 
 
 class NewListing(Resource):
@@ -42,12 +42,13 @@ class NewListing(Resource):
         if user:
             listing = Listing()
             body = request.get_json()
-            listing.image = body.get("listings.image")
-            listing.title = body.get("listings.title")
-            listing.price = body.get("listings.price")
-            listing.amenities = body.get("listings.amenities")
+            print(body.get("image"))
+            listing.image = body.get("image")
+            listing.title = body.get("title")
+            listing.price = body.get("price")
+            listing.amenities = body.get("amenities")
             user.listings.append(listing)
-            listing.update(**body)
+            user.save()
             return {"message": "Updated user listings"}, 200
 
 
