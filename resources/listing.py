@@ -22,12 +22,14 @@ class Listings(Resource):
 
 class ListingByTitle(Resource):
     def get(self, title):
-        user = User.objects(email=current_user).first()
-        if user:
-            for listing in user.listings:
-                if listing.title == title:
-                    return make_response(jsonify(listing), 200)
-        return {'msg': f'Unable to find `{title}`'}, 404
+        listings = []
+        users = User.objects()
+        for user in users:
+            listings.extend(user.listings)
+        for listing in listings:
+            if listing.title == title:
+                return make_response(jsonify(listing), 200)
+        return {'msg': f'Listing `{title}` not found'}, 404
 
 
 class NewListing(Resource):
