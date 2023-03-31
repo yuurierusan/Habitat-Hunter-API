@@ -1,4 +1,4 @@
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token
 from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from flask_bcrypt import Bcrypt
@@ -25,7 +25,9 @@ class Users(Resource):
         users = User.objects()
         return make_response(jsonify(users), 200)
 
-    def get_user_by_id(self, id: str):
+
+class UserById(Resource):
+    def get(self, id: str):
         try:
             user = User.objects(id=ObjectId(id)).first()
             if user:
