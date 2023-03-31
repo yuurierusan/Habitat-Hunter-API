@@ -2,7 +2,7 @@ from flask_jwt_extended import JWTManager
 from resources.user import Users, UserById, SignUp, SignIn, Logout
 from flask import Flask
 from flask_mongoengine import MongoEngine
-from resources.listing import Listings, NewListing, UpdateListing, DeleteListing
+from resources.listing import Listings, ListingById, NewListing, UpdateListing, DeleteListing
 from resources.comment import Comments, NewComment
 from flask_session import Session
 from dotenv import load_dotenv
@@ -32,14 +32,15 @@ api = Api(app)
 db.init_app(app, print('started'))
 
 api.add_resource(Users, '/users')
-api.add_resource(UserById, '/users/<id>')
+api.add_resource(UserById, '/user/<id>')
 api.add_resource(SignUp, '/signup')
 api.add_resource(SignIn, '/signin')
 api.add_resource(Logout, '/logout')
 api.add_resource(Listings, '/listings')
+api.add_resource(ListingById, '/listing/<id>')
 api.add_resource(NewListing, '/listing/create')
-api.add_resource(UpdateListing, '/listing/<id>')
-api.add_resource(DeleteListing, '/listing/<id>')
+api.add_resource(UpdateListing, '/listing/update/<id>')
+api.add_resource(DeleteListing, '/listing/delete/<id>')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
 
