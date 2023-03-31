@@ -68,8 +68,7 @@ class UpdateListing(Resource):
                         'amenities', listing.amenities)
                     user.save()
                     return {"message": f"Listing `{title}` Updated"}, 200
-                return {"message": f"Listing `{title}` didn't match"}, 404
-        return {"message": "Please log in"}, 404
+            return {"message": f"Listing `{title}` didn't match"}, 404
 
 
 class DeleteListing(Resource):
@@ -83,5 +82,4 @@ class DeleteListing(Resource):
                     user.listings.remove(listing)
                     user.save()
                     return {"message": f"Listing `{title}` Deleted"}, 200
-                return {"message": f"Listing `{title}` didn't match"}, 404
-        return {"message": "Please log in"}, 404
+        return {"message": f"Listing `{title}` didn't match"}, 404
