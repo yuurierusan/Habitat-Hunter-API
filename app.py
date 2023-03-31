@@ -40,7 +40,7 @@ api.add_resource(Listings, '/listings')
 api.add_resource(ListingById, '/listing/<id>')
 api.add_resource(NewListing, '/listing/create')
 api.add_resource(UpdateListing, '/listing/update/<title>')
-api.add_resource(DeleteListing, '/listing/delete/<id>')
+api.add_resource(DeleteListing, '/listing/delete/<title>')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
 

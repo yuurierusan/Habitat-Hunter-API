@@ -67,19 +67,21 @@ class UpdateListing(Resource):
                     listing.amenities = request.json.get(
                         'amenities', listing.amenities)
                     user.save()
-                    return {"message": f"Listing {title} Updated"}, 200
+                    return {"message": f"Listing `{title}` Updated"}, 200
+                return {"message": f"Listing `{title}` didn't match"}, 404
         return {"message": "Please log in"}, 404
 
 
 class DeleteListing(Resource):
     @jwt_required()
-    def delete(id):
-        if index():
-            current_listing = get_jwt_identity()
-            listing = Listing.objects(title=current_listing).first()
-            id = Listing.objects(id=id)
-            if listing and id:
-                id.delete()
-                return jsonify(id), 200
-            return {"message": "Listing id didn't match"}, 404
+    def delete(id, title):
+        current_user = get_jwt_identity()
+        user = User.objects(email=current_user).first()
+        if user:
+            for listing in user.listings:
+                if listing.title == title:
+                    user.listings.remove(listing)
+                    user.save()
+                    return {"message": f"Listing `{title}` Deleted"}, 200
+                return {"message": f"Listing `{title}` didn't match"}, 404
         return {"message": "Please log in"}, 404
