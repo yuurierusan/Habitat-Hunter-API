@@ -20,18 +20,14 @@ class Listings(Resource):
             return make_response(jsonify(listings), 200)
 
 
-class ListingById(Resource):
-    def get(self, id: str):
-        # try:
-        #     user = User.objects(id=ObjectId(id)).first()
-
-        #     if user:
-        #         return make_response(jsonify({'id': str(user.id), 'name': user.name, 'email': user.email}), 200)
-        #     listing = Listing.objects(title=current_listing).first()
-        #     id = Listing.objects(id=id)
-        #     if listing and id:
-        #         return jsonify(id), 200
-        return {'msg': 'Unable to find listing'}, 404
+class ListingByTitle(Resource):
+    def get(self, title):
+        user = User.objects(email=current_user).first()
+        if user:
+            for listing in user.listings:
+                if listing.title == title:
+                    return make_response(jsonify(listing), 200)
+        return {'msg': f'Unable to find `{title}`'}, 404
 
 
 class NewListing(Resource):
