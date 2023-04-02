@@ -18,6 +18,7 @@ class Comments(Resource):
         comments = []
         for user in users:
             comments.extend(user.comments)
+            print(comments)
         return make_response(jsonify(user.name, comments), 200)
 
 

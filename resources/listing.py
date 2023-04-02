@@ -13,11 +13,11 @@ def index():
 
 class Listings(Resource):
     def get(self):
-        users = User.objects()
         listings = []
+        users = User.objects()
         for user in users:
             listings.extend(user.listings)
-            return make_response(jsonify(listings), 200)
+        return make_response(jsonify(listings), 200)
 
 
 class ListingByTitle(Resource):
@@ -26,6 +26,7 @@ class ListingByTitle(Resource):
         users = User.objects()
         for user in users:
             listings.extend(user.listings)
+            print(listings)
         for listing in listings:
             if listing.title == title:
                 return make_response(jsonify(listing), 200)
