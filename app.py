@@ -1,5 +1,5 @@
 from flask_jwt_extended import JWTManager
-from resources.user import Users, UserById, SignUp, SignIn, Logout
+from resources.user import Users, UserById, Register, Login, Logout
 from flask import Flask
 from resources.listing import Listings, ListingByTitle, NewListing, UpdateListing, DeleteListing
 from resources.comment import Comments, NewComment
@@ -32,8 +32,8 @@ db.init_app(app, print('started'))
 
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/user/<id>')
-api.add_resource(SignUp, '/signup')
-api.add_resource(SignIn, '/signin')
+api.add_resource(Register, '/register')
+api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(Listings, '/listings')
 api.add_resource(ListingByTitle, '/listing/<title>')

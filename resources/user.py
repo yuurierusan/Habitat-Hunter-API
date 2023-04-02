@@ -39,7 +39,7 @@ class UserById(Resource):
             return {'msg': 'Error retrieving user'}, 500
 
 
-class SignUp(Resource):
+class Register(Resource):
     def post(self):
         user = User()
         body = request.get_json()
@@ -52,7 +52,7 @@ class SignUp(Resource):
         return {"message": "User Signed Up"}, 200
 
 
-class SignIn(Resource):
+class Login(Resource):
     def post(self):
         body = request.get_json()
         user = User.objects(email=body.get("email")).first()
