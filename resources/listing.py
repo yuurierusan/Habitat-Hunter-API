@@ -41,8 +41,8 @@ class NewListing(Resource):
         if user:
             listing = Listing()
             body = request.get_json()
-            listing.image = body.get("image")
             listing.title = body.get("title")
+            listing.image = body.get("image")
             listing.price = body.get("price")
             listing.content = body.get("content")
             listing.icon = body.get("icon")
