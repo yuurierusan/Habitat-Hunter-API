@@ -38,6 +38,7 @@ class NewListing(Resource):
     def put(self):
         current_user = get_jwt_identity()
         user = User.objects(email=current_user).first()
+        print(user, 'We hit the new listing route')
         if user:
             listing = Listing()
             body = request.get_json()

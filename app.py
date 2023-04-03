@@ -42,6 +42,7 @@ api.add_resource(UpdateListing, '/listing/update/<title>')
 api.add_resource(DeleteListing, '/listing/delete/<title>')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
+api.add_resource(CheckSession, '/auth/session')
 
 
 if __name__ == "__main__":
