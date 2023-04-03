@@ -44,7 +44,9 @@ class NewListing(Resource):
             listing.image = body.get("image")
             listing.title = body.get("title")
             listing.price = body.get("price")
+            listing.content = body.get("content")
             listing.amenities = body.get("amenities")
+            listing.type = body.get("type")
             user.listings.append(listing)
             user.save()
             return {"message": f"Updated {user.name} listings"}, 200
@@ -63,6 +65,9 @@ class UpdateListing(Resource):
                     listing.image = request.json.get('image', listing.image)
                     listing.title = request.json.get('title', listing.title)
                     listing.price = request.json.get('price', listing.price)
+                    listing.type = request.json.get("type", listing.type)
+                    listing.content = request.json.get(
+                        'content', listing.content)
                     listing.amenities = request.json.get(
                         'amenities', listing.amenities)
                     user.save()
