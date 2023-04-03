@@ -8,6 +8,7 @@ class Listing(db.EmbeddedDocument):
     content = db.StringField()
     price = db.IntField()
     type = db.StringField()
+    icon = db.StringField()
     amenities = db.StringField()
     creation_date = db.DateTimeField(default=datetime.now)
     modified_date = db.DateTimeField(default=datetime.now)
