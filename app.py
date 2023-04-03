@@ -1,5 +1,5 @@
 from flask_jwt_extended import JWTManager
-from resources.user import Users, UserById, Register, Login, Logout
+from resources.user import Users, UserById, Register, Login, Logout, CheckSession
 from flask import Flask
 from resources.listing import Listings, ListingByTitle, NewListing, UpdateListing, DeleteListing
 from resources.comment import Comments, NewComment
@@ -42,7 +42,7 @@ api.add_resource(UpdateListing, '/listing/update/<title>')
 api.add_resource(DeleteListing, '/listing/delete/<title>')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
-api.add_resource(CheckSession, '/auth/session')
+api.add_resource(CheckSession, '/session')
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_restful import Resource
 from flask import request, session, jsonify, make_response
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from flask_cors import cross_origin
+
 
 load_dotenv()
 
@@ -67,7 +67,7 @@ class Login(Resource):
 
 
 class CheckSession(Resource):
-    @cross_origin()
+
     @jwt_required()
     def get(self):
         current_user = get_jwt_identity()
