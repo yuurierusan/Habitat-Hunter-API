@@ -67,7 +67,6 @@ class Login(Resource):
 
 
 class CheckSession(Resource):
-
     @jwt_required()
     def get(self):
         current_user = get_jwt_identity()
