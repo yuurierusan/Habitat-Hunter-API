@@ -20,17 +20,17 @@ class Listings(Resource):
         return make_response(jsonify(listings), 200)
 
 
-class ListingByTitle(Resource):
-    def get(self, title):
+class ListingById(Resource):
+    def get(self, id):
         listings = []
         users = User.objects()
         for user in users:
             listings.extend(user.listings)
             print(listings)
         for listing in listings:
-            if listing.title == title:
+            if listing.id == id:
                 return make_response(jsonify(listing), 200)
-        return {'msg': f'Listing `{title}` not found'}, 404
+        return {'msg': f'Listing `{id}` not found'}, 404
 
 
 class NewListing(Resource):
@@ -57,36 +57,36 @@ class NewListing(Resource):
 
 class UpdateListing(Resource):
     @jwt_required()
-    def put(self, title):
+    def put(self, id):
         current_user = get_jwt_identity()
         user = User.objects(email=current_user).first()
         if user:
             for listing in user.listings:
-                if listing.title == title:
+                if listing.id == id:
                     body = request.get_json()
-                    listing.image = request.json.get('image', listing.image)
+                    # listing.image = request.json.get('image', listing.image)
                     listing.title = request.json.get('title', listing.title)
-                    listing.icon = request.json.get('icon', listing.icon)
+                    # listing.icon = request.json.get('icon', listing.icon)
                     listing.price = request.json.get('price', listing.price)
-                    listing.type = request.json.get("type", listing.type)
+                    # listing.type = request.json.get("type", listing.type)
                     listing.content = request.json.get(
                         'content', listing.content)
                     listing.amenities = request.json.get(
                         'amenities', listing.amenities)
                     user.save()
-                    return {"message": f"Listing `{title}` Updated"}, 200
-            return {"message": f"Listing `{title}` didn't match"}, 404
+                    return {"message": f"Listing `{id}` Updated"}, 200
+            return {"message": f"Listing `{id}` didn't match"}, 404
 
 
 class DeleteListing(Resource):
     @jwt_required()
-    def delete(id, title):
+    def delete(self, id):
         current_user = get_jwt_identity()
         user = User.objects(email=current_user).first()
         if user:
             for listing in user.listings:
-                if listing.title == title:
+                if listing.id == id:
                     user.listings.remove(listing)
                     user.save()
-                    return {"message": f"Listing `{title}` Deleted"}, 200
-        return {"message": f"Listing `{title}` didn't match"}, 404
+                    return {"message": f"Listing `{id}` Deleted"}, 200
+        return {"message": f"Listing `{id}` didn't match"}, 404

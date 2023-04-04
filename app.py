@@ -1,7 +1,7 @@
 from flask_jwt_extended import JWTManager
 from resources.user import Users, UserById, Register, Login, Logout, CheckSession
 from flask import Flask
-from resources.listing import Listings, ListingByTitle, NewListing, UpdateListing, DeleteListing
+from resources.listing import Listings, ListingById, NewListing, UpdateListing, DeleteListing
 from resources.comment import Comments, NewComment
 from flask_session import Session
 from dotenv import load_dotenv
@@ -36,10 +36,10 @@ api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(Listings, '/listings')
-api.add_resource(ListingByTitle, '/listing/<title>')
+api.add_resource(ListingById, '/listing/<id>')
 api.add_resource(NewListing, '/listing/create')
-api.add_resource(UpdateListing, '/listing/update/<title>')
-api.add_resource(DeleteListing, '/listing/delete/<title>')
+api.add_resource(UpdateListing, '/listing/update/<id>')
+api.add_resource(DeleteListing, '/listing/delete/<id>')
 api.add_resource(Comments, '/comments')
 api.add_resource(NewComment, '/comment/create')
 api.add_resource(CheckSession, '/session')
