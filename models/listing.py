@@ -4,7 +4,7 @@ from models.db import db
 
 class Listing(db.EmbeddedDocument):
     image = db.StringField()
-    title = db.StringField()
+    title = db.StringField(unique=True)
     content = db.StringField()
     price = db.IntField()
     type = db.StringField()
