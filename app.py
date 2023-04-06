@@ -27,7 +27,7 @@ api = Api(app)
 db.init_app(app)
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
-app.config["MONGODB_SETTINGS"] = {'DB': "TEST", "host": MONGO_URI}
+app.config["MONGODB_SETTINGS"] = {'DB': "Habitat-Hunter", "host": MONGO_URI}
 app.config['JWT_SECRET_KEY'] = APP_SECRET_KEY
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
