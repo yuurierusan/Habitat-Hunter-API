@@ -23,8 +23,8 @@ class NewComment(Resource):
         if user:
             comment = Comment()
             body = request.get_json()
-            comment.title = body.get("comments.title")
-            comment.content = body.get("comments.content")
+            comment.title = body.get("title")
+            comment.content = body.get("content")
             user.comments.append(comment)
-            user.update(**body)
+            user.save()
             return {"message": "Updated user comments"}, 200

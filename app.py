@@ -16,22 +16,43 @@ from resources.listing import Listings, ListingById, NewListing, UpdateListing, 
 
 load_dotenv()
 
-APP_SECRET_KEY = secrets.token_hex(32)
+# check for secret key
+
+
+def get_secret_key():
+    secret_key = os.environ.get('APP_SECRET_KEY')
+    if not secret_key:
+        secret_key = secrets.token_hex(32)
+    return secret_key
+
+# check for database connection
+
+
+def connect_to_mongodb():
+    MONGO_URI = os.environ.get('MONGO_URI')
+    if MONGO_URI is None:
+        raise ValueError("MONGO_URI environment variable is not set")
+
+
+# if the secret exist call here
+APP_SECRET_KEY = get_secret_key()
+# if the database exist call here
 MONGO_URI = os.environ.get('MONGO_URI')
+
 app = Flask(__name__)
 
-CORS(app)
-Session(app)
-JWTManager(app)
-api = Api(app)
-db.init_app(app)
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
-app.config["MONGODB_SETTINGS"] = {'DB': "TEST", "host": MONGO_URI}
+app.config["MONGODB_SETTINGS"] = {'DB': "test", "host": MONGO_URI}
 app.config['JWT_SECRET_KEY'] = APP_SECRET_KEY
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 
+CORS(app)
+JWTManager(app)
+api = Api(app)
+db.init_app(app)
+Session(app)
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
@@ -49,4 +70,4 @@ api.add_resource(NewComment, '/comment/create')
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
