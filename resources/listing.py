@@ -5,12 +5,6 @@ from models.listing import Listing
 from models.user import User
 
 
-def index():
-    if not session.get("email"):
-        return False
-    return True
-
-
 class Listings(Resource):
     def get(self):
         listings = []

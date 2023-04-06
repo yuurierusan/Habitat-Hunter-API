@@ -1,15 +1,9 @@
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask import request, session, jsonify, make_response
+from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.user import User
 from models.comment import Comment
 from models.db import db
-
-
-def index():
-    if not session.get("email"):
-        return False
-    return True
 
 
 class Comments(Resource):
