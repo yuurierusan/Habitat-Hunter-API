@@ -70,4 +70,4 @@ api.add_resource(NewComment, '/comment/create')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
