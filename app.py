@@ -48,7 +48,7 @@ app.config['JWT_SECRET_KEY'] = APP_SECRET_KEY
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 JWTManager(app)
 api = Api(app)
 db.init_app(app)
