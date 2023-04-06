@@ -23,7 +23,6 @@ class NewComment(Resource):
         if user:
             comment = Comment()
             body = request.get_json()
-            comment.title = body.get("title")
             comment.content = body.get("content")
             user.comments.append(comment)
             user.save()
