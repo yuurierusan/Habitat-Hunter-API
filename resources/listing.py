@@ -11,7 +11,9 @@ class Listings(Resource):
         users = User.objects()
         for user in users:
             listings.extend(user.listings)
-        return make_response(jsonify(listings), 200)
+            print(user.listings)
+        return make_response(listings)
+        # return {'msg': 'No listings found'}, 404
 
 
 class ListingById(Resource):
